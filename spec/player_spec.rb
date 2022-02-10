@@ -10,6 +10,7 @@ F = Column.new("F", 5)
 G = Column.new("G", 6)
 valid_columns = [A, B, C, D, E, F, G]
 board = Board.new(valid_columns)
+board.create_columns
 
 describe Player do
   describe 'initialize' do
@@ -24,19 +25,29 @@ describe Player do
     end
   end
 
-  describe 'playing a turn' do
-    it 'can\'t play a column that has 6 pieces in it' do
+  # describe 'playing a turn' do
+  #   it 'can\'t play a column that has 6 pieces in it' do
+  #     player = Player.new(board)
+  #     B = Column.new("B", 1, 6)
+  #     require 'pry'; binding.pry
+  #     expect(B.count).to eq(6)
+  #     @input = "B"
+  #     expect(player.validate).to eq("Column full, choose again")
+  #   end
+  # end
+  describe '#drop' do
+    it 'can add an X to the board' do
       player = Player.new(board)
-      B = Column.new("B", 1, 6)
-      require 'pry'; binding.pry
-      expect(B.count).to eq(6)
-      @input = "B"
-      expect(player.validate).to eq("Column full, choose again")
+      player.drop("A")
+      expect(board.lines[0][0]).to eq("X ")
+    end
+
+    it 'can add a piece on top of another' do
+      player = Player.new(board)
+      player.drop("A")
+      player.drop("A")
+      expect(board.lines[1][0]).to eq("X ")
     end
   end
-
-
-
-
 
 end
