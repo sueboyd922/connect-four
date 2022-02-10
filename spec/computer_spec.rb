@@ -33,7 +33,21 @@ describe Computer do
       computer=Computer.new(board)
       computer_input=computer.random_letter
       expect(computer.board.valid_columns.keys.include?(computer_input)).to be true
-
     end
+
+    it "Only plays letter if column is not full" do
+      computer=Computer.new(board)
+      # computer.board.add_O(0, 1)
+      # computer.board.add_O(1, 1)
+      # computer.board.add_O(2, 1)
+      # computer.board.add_O(3, 1)
+      # computer.board.add_O(4, 1)
+      # computer.board.add_O(5, 1)
+      
+      binding.pry
+    end
+
+
+
   end
 end
