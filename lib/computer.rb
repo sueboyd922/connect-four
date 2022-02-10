@@ -4,14 +4,14 @@ require './lib/board'
 
 class Computer
   #a computers is initialized with a board (I think should be the same board as the computer class, we will figure that out)
+  attr_reader :board
   def initialize(board)
     @board = board
-    @random = num
   end
 
 #Generates a random number for the computer
-  def random_number
-    @random=(rand*7).to_i
+  def random_letter
+    computer_input = @board.valid_columns.keys.sample
   end
 
 #create hash to match number to letter
@@ -20,6 +20,7 @@ class Computer
   def randum_num_to_letter(num)
     num.map{("A".."G").to_a[rand(*7).to_i]}.join
   end
+
 
   # method to determine if the spot is playable
   def validate
