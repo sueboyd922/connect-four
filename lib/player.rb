@@ -2,16 +2,24 @@ require './lib/column'
 require './lib/board'
 
 class Player
+  attr_reader :board, :quit
   #a player is initialized with a board (I think should be the same board as the computer class, we will figure that out)
   def initialize(board)
     @board = board
+    @quit = false
   end
 
   #when it's the players turn they get to type in a letter to play
   def get_input
     puts "Where would you like to play?"
+    puts "Enter a letter A - G (Q to quit)"
     @input = gets.chomp
-    validate #takes the input to the validate method
+    if @input == "Q"
+      puts "Thanks for playing!"
+      @quit = true
+    else
+      validate #takes the input to the validate method
+    end
   end
 
   # method to determine if the spot is playable
@@ -35,6 +43,7 @@ class Player
 
   # method adds players piece to board
   def drop(input)
+    # require 'pry'; binding.pry
       #store the valid_columns input of count as row (this changes)
       row = @board.valid_columns[@input][0]
       #store the valid_columns input of index as column (this stays the same)
@@ -46,6 +55,8 @@ class Player
       #print out the board with new piece
       @board.print_board
       #goes back to user_input for another guess (this will change when we have both user and computer playing)
-      get_input
+
   end
+
+
 end

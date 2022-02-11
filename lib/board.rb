@@ -1,7 +1,7 @@
 require './lib/column'
 
 class Board
-    attr_reader :lines, :valid_columns
+    attr_reader :lines, :valid_columns, :columns, :pieces_played
     def initialize(columns)
       @lines = [
         [". ", ". ", ". ", ". ", ". ", ". ", ". "],
@@ -16,6 +16,10 @@ class Board
       #columns is the array that is passed to a new board object
       @valid_columns = {}
       #after the method create_columns this hash holds all the column info (name, count, index)
+      # @pieces_played = 0
+      create_columns
+      # spaces_taken
+
 
     end
 
@@ -51,4 +55,12 @@ class Board
     def add_O(row, column)
       @lines[row][column] = "O "
     end
+
+    # def spaces_taken
+    #     @valid_columns.each do |name, info|
+    #     @pieces_played += info[0]
+    #   end
+    #   @pieces_played
+    # end
+
 end
