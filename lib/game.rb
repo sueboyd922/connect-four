@@ -13,13 +13,19 @@ class Game
     f = Column.new("F", 5)
     g = Column.new("G", 6)
     valid_columns = [a, b, c, d, e, f, g]
+    puts "Welcome to Connect 4!"
+    puts "Press any key to begin"
+    puts "(but only Q if you're a quitter!)"
+    want_to_play = gets.chomp
     @board = Board.new(valid_columns)
     @player = Player.new(@board)
     @computer = Computer.new(@board)
-    # @player = player
-    # @computer = computer
     @pieces_played = 0
-    start
+    if want_to_play.upcase == "Q"
+      puts "Ok bye then"
+    else
+      start
+    end
   end
 
   def start
@@ -51,7 +57,6 @@ class Game
     #
     # game over method
     # ask if you want to replay?
-
 
 end
 
