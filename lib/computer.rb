@@ -12,7 +12,6 @@ class Computer
 #Generates a random number for the computer
   def random_letter
     @computer_input = @board.valid_columns.keys.sample
-    validate
   end
 
   # method to determine if the spot is playable
@@ -29,14 +28,13 @@ class Computer
   # method adds computers piece to board
   def drop(random)
       #store the valid_columns input of count as row (this changes)
-      row = @board.valid_columns[@computer_input][0]
+      row = @board.valid_columns[random][0]
       #store the valid_columns input of index as column (this stays the same)
-      column = @board.valid_columns[@computer_input][1]
+      column = @board.valid_columns[random][1]
       #use the board method to add the new piece
       @board.add_O(row, column)
       #increase the count in the column used by 1 so that next time it drops above it
-      @board.valid_columns[@computer_input][0] += 1
-      
+      @board.valid_columns[random][0] += 1
       #print out the board with new piece
       @board.print_board
       #goes back to the computer for another guess (this will change when we have both user and computer playing)

@@ -1,5 +1,6 @@
 require 'rspec'
 require './lib/player'
+require 'pry'
 
 A = Column.new("A", 0)
 B = Column.new("B", 1)
@@ -39,15 +40,24 @@ describe Player do
     it 'can add an X to the board' do
       player = Player.new(board)
       player.drop("A")
-      expect(board.lines[0][0]).to eq("X ")
+      expect(player.board.lines[0][0]).to eq("X ")
     end
 
     it 'can add a piece on top of another' do
       player = Player.new(board)
       player.drop("A")
       player.drop("A")
-      expect(board.lines[1][0]).to eq("X ")
+      expect(player.board.lines[2][0]).to eq("X ")
     end
+
+    it "can't choose to play a full column" do
+      player = Player.new(board)
+      3.times do
+        player.drop("A")
+      end
+      expect(player.board.valid_columns["A"][0]).to eq(6)
+    end
+
   end
 
 end
