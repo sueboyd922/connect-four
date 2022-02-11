@@ -28,8 +28,7 @@ describe Board do
     it "starts witha an empty board" do
       expect{board.print_board}.to output(
         <<~EXPECTED
-        A B C D E F G\n. . . . . . . \n. . . . . . . \n. . . . . . . \n. . . . . . . \n. . . . . . . \n. . . . . . . 
-        EXPECTED
+        A B C D E F G\n. . . . . . . \n. . . . . . . \n. . . . . . . \n. . . . . . . \n. . . . . . . \n. . . . . . . \nEXPECTED
       ).to_stdout
 
     end
