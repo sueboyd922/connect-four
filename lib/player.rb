@@ -14,6 +14,7 @@ class Player
     puts "Where would you like to play?"
     puts "Enter a letter A - G (Q to quit)"
     @input = gets.chomp
+    @input.upcase!
     if @input == "Q"
       puts "Thanks for playing!"
       @quit = true

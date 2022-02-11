@@ -4,10 +4,22 @@ require './lib/computer'
 class Game
   attr_reader :player, :computer, :pieces_played
 
-  def initialize(player, computer)
-    @player = player
-    @computer = computer
+  def initialize
+    a = Column.new("A", 0)
+    b = Column.new("B", 1)
+    c = Column.new("C", 2)
+    d = Column.new("D", 3)
+    e = Column.new("E", 4)
+    f = Column.new("F", 5)
+    g = Column.new("G", 6)
+    valid_columns = [a, b, c, d, e, f, g]
+    @board = Board.new(valid_columns)
+    @player = Player.new(@board)
+    @computer = Computer.new(@board)
+    # @player = player
+    # @computer = computer
     @pieces_played = 0
+    start
   end
 
   def start
@@ -16,6 +28,7 @@ class Game
     puts "You can go first :)"
     # @player.board.create_columns
     @player.board.print_board
+    turn
   end
 
   def turn
@@ -24,21 +37,15 @@ class Game
       @player.get_input
       @pieces_played += 1
       break if @player.quit == true
-      # @player.board.print_board
       @computer.random_letter
       @pieces_played += 1
     end
     if @pieces_played == 42
       puts "The board is full! It's a draw"
     end
-      # @computer.board.print_board
   end
 
-  # def pieces_played
-  #   @player.board.valid_columns.map do |name, info|
-  #     pieces += info[0]
-  #   end
-  # end
+
 
     # break if there's a winner
     #
@@ -48,23 +55,4 @@ class Game
 
 end
 
-A = Column.new("A", 0)
-B = Column.new("B", 1)
-C = Column.new("C", 2)
-D = Column.new("D", 3)
-E = Column.new("E", 4)
-F = Column.new("F", 5)
-G = Column.new("G", 6)
-valid_columns = [A, B, C, D, E, F, G]
-
-
-@board = Board.new(valid_columns)
-player = Player.new(@board)
-computer = Computer.new(@board)
-game = Game.new(player, computer)
-game.start
-game.turn
-
-require 'pry'; binding.pry
-
-7 + 8
+game = Game.new
