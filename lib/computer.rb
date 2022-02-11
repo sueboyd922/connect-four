@@ -12,6 +12,8 @@ class Computer
 #Generates a random number for the computer
   def random_letter
     @computer_input = @board.valid_columns.keys.sample
+    validate
+    @computer_input
   end
 
   # method to determine if the spot is playable

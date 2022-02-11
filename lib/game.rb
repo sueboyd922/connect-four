@@ -43,6 +43,7 @@ class Game
       @player.get_input
       @pieces_played += 1
       break if @player.quit == true
+      # require 'pry'; binding.pry
       @computer.random_letter
       @pieces_played += 1
     end

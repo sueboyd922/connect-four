@@ -2,15 +2,15 @@ require './lib/computer.rb'
 require 'rspec'
 require 'pry'
 
-A = Column.new("A", 0)
-B = Column.new("B", 1)
-C = Column.new("C", 2)
-D = Column.new("D", 3)
-E = Column.new("E", 4)
-F = Column.new("F", 5)
-G = Column.new("G", 6)
+a = Column.new("A", 0)
+b = Column.new("B", 1)
+c = Column.new("C", 2)
+d = Column.new("D", 3)
+e = Column.new("E", 4)
+f = Column.new("F", 5)
+g = Column.new("G", 6)
 
-columns=[A, B, C, D, E, F, G]
+columns=[a, b, c, d, e, f, g]
 
 board = Board.new(columns)
 board.create_columns
@@ -35,9 +35,9 @@ describe Computer do
   describe "play at random" do
     #confirms the computer can randomly select a column to play in
     it "generates a random letter to play" do
-      computer=Computer.new(board)
-      computer_input=computer.random_letter
-      expect(computer.board.valid_columns.keys.include?(computer_input)).to be true
+      computer = Computer.new(board)
+      
+      expect(computer.board.valid_columns.keys.include?(computer.random_letter)).to be true
     end
   end
 

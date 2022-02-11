@@ -2,15 +2,15 @@ require './lib/board.rb'
 require 'rspec'
 require 'pry'
 
-A = Column.new("A", 0)
-B = Column.new("B", 1)
-C = Column.new("C", 2)
-D = Column.new("D", 3)
-E = Column.new("E", 4)
-F = Column.new("F", 5)
-G = Column.new("G", 6)
+a = Column.new("A", 0)
+b = Column.new("B", 1)
+c = Column.new("C", 2)
+d = Column.new("D", 3)
+e = Column.new("E", 4)
+f = Column.new("F", 5)
+g = Column.new("G", 6)
 
-columns=[A, B, C, D, E, F, G]
+columns = [a, b, c, d, e, f, g]
 
 board = Board.new(columns)
 
@@ -23,12 +23,14 @@ describe Board do
     end
 
     it "has an array of columns" do
-      expect(board.columns).to eq([A, B, C, D, E, F, G])
+      expect(board.columns).to eq([a, b, c, d, e, f, g])
     end
+
     it "starts witha an empty board" do
       expect{board.print_board}.to output(
         <<~EXPECTED
-        A B C D E F G\n. . . . . . . \n. . . . . . . \n. . . . . . . \n. . . . . . . \n. . . . . . . \n. . . . . . . \nEXPECTED
+        A B C D E F G\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .
+        EXPECTED
       ).to_stdout
 
     end
