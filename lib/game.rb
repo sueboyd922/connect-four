@@ -2,12 +2,12 @@ require './lib/player'
 require './lib/computer'
 
 class Game
-  attr_reader :player, :computer
+  attr_reader :player, :computer, :pieces_played
 
   def initialize(player, computer)
     @player = player
     @computer = computer
-    @turns = 0
+    @pieces_played = 0
   end
 
   def start
@@ -20,19 +20,21 @@ class Game
 
   def turn
     # require 'pry'; binding.pry
-    # until @board.pieces_played == 42
+    until @pieces_played == 42
       @player.get_input
-      @computer.board.spaces_taken
+      @pieces_played += 1
       # @player.board.print_board
       @computer.random_letter
+      @pieces_played += 1
+    end
       # @computer.board.print_board
   end
 
-  def pieces_played
-    @player.board.valid_columns.map do |name, info|
-      pieces += info[0]
-    end
-  end
+  # def pieces_played
+  #   @player.board.valid_columns.map do |name, info|
+  #     pieces += info[0]
+  #   end
+  # end
 
     # break if there's a winner
     #
@@ -57,8 +59,10 @@ player = Player.new(@board)
 computer = Computer.new(@board)
 game = Game.new(player, computer)
 game.start
+10.times do
+  game.turn
+end
 
-
-require 'pry'; binding.pry
+# require 'pry'; binding.pry
 
 7 + 8
