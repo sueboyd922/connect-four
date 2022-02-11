@@ -2,10 +2,11 @@ require './lib/column'
 require './lib/board'
 
 class Player
-  attr_reader :board
+  attr_reader :board, :quit
   #a player is initialized with a board (I think should be the same board as the computer class, we will figure that out)
   def initialize(board)
     @board = board
+    @quit = false
   end
 
   #when it's the players turn they get to type in a letter to play
@@ -14,7 +15,8 @@ class Player
     puts "Enter a letter A - G (Q to quit)"
     @input = gets.chomp
     if @input == "Q"
-      return "Quitter"
+      puts "Thanks for playing!"
+      @quit = true
     else
       validate #takes the input to the validate method
     end
@@ -55,4 +57,6 @@ class Player
       #goes back to user_input for another guess (this will change when we have both user and computer playing)
 
   end
+
+
 end

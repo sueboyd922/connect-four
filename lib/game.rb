@@ -23,9 +23,13 @@ class Game
     until @pieces_played == 42
       @player.get_input
       @pieces_played += 1
+      break if @player.quit == true
       # @player.board.print_board
       @computer.random_letter
       @pieces_played += 1
+    end
+    if @pieces_played == 42
+      puts "The board is full! It's a draw"
     end
       # @computer.board.print_board
   end
@@ -59,10 +63,8 @@ player = Player.new(@board)
 computer = Computer.new(@board)
 game = Game.new(player, computer)
 game.start
-10.times do
-  game.turn
-end
+game.turn
 
-# require 'pry'; binding.pry
+require 'pry'; binding.pry
 
 7 + 8
