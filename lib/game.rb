@@ -37,14 +37,14 @@ class Game
   end
 
   def turn
-    until @player.winner? == true || @computer.winner?
+    until @pieces_played == 42
       @player.get_input
-      # require 'pry'; binding.pry
       @pieces_played += 1
       break if @player.quit == true
+      break if @player.winner? == true
       @computer.random_letter
       @pieces_played += 1
-      break if @pieces_played == 42
+      break if @computer.winner? == true
     end
     if @pieces_played == 42
       puts "The board is full! It's a draw"
