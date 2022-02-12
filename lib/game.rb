@@ -12,7 +12,7 @@ class Game
     e = Column.new("E", 4)
     f = Column.new("F", 5)
     g = Column.new("G", 6)
-    valid_columns = [a, b, c, d, e, f, g]
+    @valid_columns = [a, b, c, d, e, f, g]
     puts "Welcome to Connect 4!"
     puts "Press any key to begin"
     puts "(but only Q if you're a quitter!)"
@@ -32,32 +32,28 @@ class Game
     puts "Welcome to Connect Four!"
     puts "You will be playing against the computer!"
     puts "You can go first :)"
-    # @player.board.create_columns
     @player.board.print_board
     turn
   end
 
   def turn
-    # require 'pry'; binding.pry
-    until @pieces_played == 42
+    until @player.winner? == true || @computer.winner?
       @player.get_input
       @pieces_played += 1
       break if @player.quit == true
-      # require 'pry'; binding.pry
       @computer.random_letter
       @pieces_played += 1
+      break if @pieces_played == 42
     end
     if @pieces_played == 42
       puts "The board is full! It's a draw"
+    elsif @player.winner?
+      puts "You beat a dumb computer...congrats"    
+      end
+    elsif @computer.winner?
+      puts "The computer beat you...sad"
     end
   end
-
-
-
-    # break if there's a winner
-    #
-    # game over method
-    # ask if you want to replay?
 
 end
 

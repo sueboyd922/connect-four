@@ -59,5 +59,31 @@ class Player
 
   end
 
+  def check_for_horizontal
+    connect = @board.lines.select do |column|
+            column.join.include?("X X X X")
+          end
+    connect.empty?
+  end
+
+
+  def check_for_vertical
+    column_check = @board.lines.transpose
+    connect = column_check.select do |column|
+            column.join.include?("X X X X")
+          end
+    connect.empty?
+    # require 'pry'; binding.pry
+  end
+
+  def winner?
+    if check_for_horizontal == false
+      return true
+    elsif check_for_vertical == false
+      return true
+    end
+  end
+
+
 
 end

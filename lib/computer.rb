@@ -42,4 +42,30 @@ class Computer
       #goes back to the computer for another guess (this will change when we have both user and computer playing)
       # random_letter
   end
+
+  def check_for_horizontal
+    connect = @board.lines.select do |column|
+            column.join.include?("O O O O")
+          end
+    connect.empty?
+  end
+
+
+  def check_for_vertical
+    column_check = @board.lines.transpose
+    connect = column_check.select do |column|
+            column.join.include?("O O O O")
+          end
+    connect.empty?
+    # require 'pry'; binding.pry
+  end
+
+  def winner?
+    if check_for_horizontal == false
+      return true
+    elsif check_for_vertical == false
+      return true
+    end
+  end
+
 end
