@@ -32,32 +32,28 @@ class Game
     puts "Welcome to Connect Four!"
     puts "You will be playing against the computer!"
     puts "You can go first :)"
-    # @player.board.create_columns
     @player.board.print_board
     turn
   end
 
   def turn
-    # require 'pry'; binding.pry
     until @pieces_played == 42
       @player.get_input
       @pieces_played += 1
       break if @player.quit == true
-      # require 'pry'; binding.pry
+      break if @player.winner? == true
       @computer.random_letter
       @pieces_played += 1
+      break if @computer.winner? == true
     end
     if @pieces_played == 42
       puts "The board is full! It's a draw"
+    elsif @player.winner?
+      puts "You beat a dumb computer...congrats"
+    elsif @computer.winner?
+      puts "The computer beat you...sad"
     end
   end
-
-
-
-    # break if there's a winner
-    #
-    # game over method
-    # ask if you want to replay?
 
 end
 
