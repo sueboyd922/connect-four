@@ -76,7 +76,28 @@ class Player
     # require 'pry'; binding.pry
   end
 
+  def diagonal
+    # require 'pry'; binding.pry
+    diagonal = [
+      [@board.lines[2][0], @board.lines[3][1], @board.lines[4][2], @board.lines[5][3]],
+      [@board.lines[1][0], @board.lines[2][1], @board.lines[3][2], @board.lines[4][3], @board.lines[5][4]],
+      [@board.lines[0][0], @board.lines[1][1], @board.lines[2][2], @board.lines[3][3], @board.lines[4][4], @board.lines[5][5]],
+      [@board.lines[0][1], @board.lines[1][2], @board.lines[2][3], @board.lines[3][4], @board.lines[4][5], @board.lines[5][6]],
+      [@board.lines[0][2], @board.lines[1][3], @board.lines[2][4], @board.lines[3][5], @board.lines[4][6]],
+      [@board.lines[0][3], @board.lines[1][4], @board.lines[2][5], @board.lines[3][6]]
+    ]
+    # require 'pry'; binding.pry
+    connect = diagonal.select do |column|
+            column.join.include?("X X X X")
+          end
+    connect.empty?
+  end
+
+
   def winner?
+    if diagonal == false
+      return true
+    end
     if check_for_horizontal == false
       return true
     elsif check_for_vertical == false
