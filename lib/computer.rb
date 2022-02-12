@@ -11,16 +11,17 @@ class Computer
 
 #Generates a random number for the computer
   def random_letter
-    @computer_input = @board.valid_columns.keys.sample
-    validate
+    sleep([0, 1, 2].sample) #neat trick Kim and Joseph shared, the computer will pause for 0-2 seconds as if it's thinking. It's obviously not, this computer is stupid.
+    @computer_input = @board.valid_columns.keys.sample # gets a random letter A-G from the column hash keys
+    validate #checks to see if it's a playable column
     @computer_input
   end
 
   # method to determine if the spot is playable
   def validate
-      #if yes check the count of that column. Is it less than 6? If it's 6 then the column is full and it is invalid
+      #check to see if column is full or not
       if @board.valid_columns[@computer_input][0] == 6
-        random_letter#sends turn back to computer
+        random_letter #sends turn back to computer
       #if it is less than 6 the computer can proceed to the drop method
       else
         drop(@computer_input)
@@ -39,8 +40,6 @@ class Computer
       @board.valid_columns[random][0] += 1
       #print out the board with new piece
       @board.print_board
-      #goes back to the computer for another guess (this will change when we have both user and computer playing)
-      # random_letter
   end
 
 end

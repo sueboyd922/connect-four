@@ -3,7 +3,7 @@ require './lib/board'
 
 class Player
   attr_reader :board, :quit
-  #a player is initialized with a board (I think should be the same board as the computer class, we will figure that out)
+  #a player is initialized with a board
   def initialize(board)
     @board = board
     @quit = false
