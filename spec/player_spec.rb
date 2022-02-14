@@ -26,16 +26,6 @@ describe Player do
     end
   end
 
-  # describe 'playing a turn' do
-  #   it 'can\'t play a column that has 6 pieces in it' do
-  #     player = Player.new(board)
-  #     B = Column.new("B", 1, 6)
-  #     require 'pry'; binding.pry
-  #     expect(B.count).to eq(6)
-  #     @input = "B"
-  #     expect(player.validate).to eq("Column full, choose again")
-  #   end
-  # end
   describe '#drop' do
     it 'can add an X to the board' do
       player = Player.new(board)

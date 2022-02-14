@@ -53,9 +53,7 @@ describe Computer do
 
     #confirms the computer will select a different column if the initial column is full
     it "Only plays letter if column is not full" do
-      #expect the computer to drop an "O" to column "C" if all other columns are full
       computer = Computer.new(board)
-
       computer.board.add_O(0, 1)
       computer.board.add_O(1, 1)
       computer.board.add_O(2, 1)

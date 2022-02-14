@@ -27,7 +27,6 @@ class Computer
         drop(@computer_input)
         @computer_input
       end
-  # new method full?
   end
 
   # method adds computers piece to board
@@ -43,5 +42,4 @@ class Computer
       #print out the board with new piece
       @board.print_board
   end
-
 end

@@ -3,6 +3,7 @@ require './lib/computer'
 
 class Game
   attr_reader :player, :computer, :board, :pieces_played
+  attr_accessor :winner
 
   def initialize
     # creates all the columns
@@ -15,22 +16,13 @@ class Game
     g = Column.new("G", 6)
     #columns into an array that get turned into a hash in the board class
     valid_columns = [a, b, c, d, e, f, g]
-    # puts "Welcome to Connect 4!"
-    # puts "Press any key to begin"
-    # puts "(but only Q if you're a quitter!)"
-    # want_to_play = gets.chomp
     #creates a board and then a player and computer that have access to that board
     @board = Board.new(valid_columns)
     @player = Player.new(@board)
     @computer = Computer.new(@board)
+
     #game starts with zero pieces played
     @pieces_played = 0
-    #option to quit the game before it starts
-    # if want_to_play.upcase == "Q"
-    #   puts "Ok bye then"
-    # else #otherwise on to start!!
-    #   start
-    # end
   end
 
   #this method will kickstart the game!
@@ -41,7 +33,7 @@ class Game
     want_to_play = gets.chomp
     if want_to_play.upcase == "Q"
       puts "Ok bye then"
-    else #otherwise on to start!!
+    else
       puts "You will be playing against the computer!"
       puts "You can go first :)"
       @player.board.print_board
@@ -51,7 +43,7 @@ class Game
 
   def turn
     # game will continue until 42 pieces have been played if there is no winner and the game will be a draw
-    until @pieces_played == 42
+    until @player.board.board_full?
       @player.turn # this starts the chain of getting info, checking that it is a valid choice, adding it to the board and then printing the new board
       @pieces_played += 1 #one more piece played!
       break if @player.quit == true #if player ever types Q game is quit
@@ -62,11 +54,13 @@ class Game
     end
 
     #when game ends whichever option is true prints out!
-    if @pieces_played == 42
+    if @player.board.board_full?
       puts "The board is full! It's a draw"
     elsif winner?(@player)
+      @winner = "player"
       puts "You beat a dumb computer...congrats"
     elsif winner?(@computer)
+      @winner = "computer"
       puts "The computer beat you...sad"
     end
   end
@@ -129,5 +123,5 @@ class Game
     end
 end
 
-game = Game.new
-game.start
+# game = Game.new
+# game.start

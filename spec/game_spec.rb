@@ -22,24 +22,13 @@ describe Game do
   end
 
   describe '#start' do
-    xit 'prints a welcome message' do
-      game = Game.new
-      expect{game.start}.to output(
-        <<~EXPECTED
-        Welcome to Connect 4!
-        Press any key to begin
-        (but only Q if you're a quitter!)
-        EXPECTED
-      ).to_stdout
-    end
+
 
     xit 'allows you to quit the game' do
       game = Game.new
       game.start
       want_to_play = "Q"
-      #want to prove you can quit and gives a message
 
-      #start new game
     end
 
   end
@@ -51,8 +40,10 @@ describe Game do
       game.board.add_X(1, 0)
       game.board.add_X(2, 0)
       game.board.add_X(3, 0)
-      # require 'pry'; binding.pry
+      # when check_for_vertical is false it means that the array collecting winning combinations is not empty, aka there is a winner!
+      expect(game.check_for_vertical("X X X X")).to be false
       expect(game.winner?(game.player)).to be true
+
     end
 
     it 'can have a horizontal winner' do
@@ -61,6 +52,8 @@ describe Game do
       game.board.add_O(2, 3)
       game.board.add_O(2, 4)
       game.board.add_O(2, 5)
+      # when check_for_horizontal is false it means that the array collecting winning combinations is not empty, aka there is a winner!
+      expect(game.check_for_horizontal("O O O O")).to be false
       expect(game.winner?(game.computer)).to be true
     end
 
@@ -70,6 +63,8 @@ describe Game do
       game.board.add_X(4, 4)
       game.board.add_X(5, 5)
       game.board.add_X(2, 2)
+      # when check_for_diagonal is false it means that the array collecting winning combinations is not empty, aka there is a winner!
+      expect(game.check_for_diagonal("X X X X")).to be false
       expect(game.winner?(game.player)).to be true
     end
 
@@ -79,22 +74,41 @@ describe Game do
       game.board.add_O(4, 2)
       game.board.add_O(3, 3)
       game.board.add_O(2, 4)
+      # when check_for_diagonal is false it means that the array collecting winning combinations is not empty, aka there is a winner!
+      expect(game.check_for_diagonal("O O O O")).to be false
       expect(game.winner?(game.computer)).to be true
+    end
+
+    it 'can end in a draw' do
+      game = Game.new
+      expect(game.board.board_full?).to be false
+      3.times do
+        game.player.drop("A")
+        game.player.drop("B")
+        game.player.drop("D")
+        game.player.drop("F")
+      end
+      expect(game.board.board_full?).to be false
+      3.times do
+        game.computer.drop("A")
+        game.computer.drop("B")
+        game.computer.drop("D")
+        game.computer.drop("E")
+        game.computer.drop("F")
+        game.computer.drop("G")
+        game.computer.drop("C")
+      end
+      expect(game.board.board_full?).to be false
+      3.times do
+        game.player.drop("E")
+        game.player.drop("C")
+        game.player.drop("G")
+      end
+      expect(game.board.board_full?).to be true
     end
   end
 
 
-
-    # test start method
-
     # test turn method, game ends with 42 pieces, games ends if there's a winner
-
-    # test winner? method
-
-    # horional check method
-
-    # vertical method
-
-    # diagonal check method
 
 end

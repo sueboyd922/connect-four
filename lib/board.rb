@@ -51,5 +51,11 @@ class Board
     def add_O(row, column)
       @lines[row][column] = "O "
     end
-    
+
+    def board_full?
+      empty_spaces = @lines.select do |row|
+            row.join.include?(". ")
+          end
+      empty_spaces.empty?
+    end
 end
