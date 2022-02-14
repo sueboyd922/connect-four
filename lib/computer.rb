@@ -25,7 +25,9 @@ class Computer
       #if it is less than 6 the computer can proceed to the drop method
       else
         drop(@computer_input)
+        @computer_input
       end
+  # new method full?
   end
 
   # method adds computers piece to board

@@ -56,6 +56,13 @@ describe Player do
         player.drop("A")
       end
       expect(player.board.valid_columns["A"][0]).to eq(6)
+      # player.drop("A")
+      expect{player.validate("A")}.to output("Column full, choose again").to_stdout
+    end
+
+    xit "can't choose and invalid_column" do
+      player=Player.new(board)
+      expect(player.validate("M")).to eq("That's not a valid column, try again")
     end
 
   end

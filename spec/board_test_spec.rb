@@ -46,5 +46,11 @@ describe Board do
       board.add_O(0,3)
       expect(board.lines[0][3]).to eq("O ")
     end
+
+    it "creates a hash of valid_columns" do
+      board = Board.new(columns)
+      board.create_columns
+      expect(board.valid_columns).to eq({"A"=>[0, 0], "B"=>[0, 1], "C"=>[0, 2], "D"=>[0, 3], "E"=>[0, 4], "F"=>[0, 5], "G"=>[0, 6]})
+    end
   end
 end

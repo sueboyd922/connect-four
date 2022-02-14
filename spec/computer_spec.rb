@@ -36,7 +36,7 @@ describe Computer do
     #confirms the computer can randomly select a column to play in
     it "generates a random letter to play" do
       computer = Computer.new(board)
-      
+
       expect(computer.board.valid_columns.keys.include?(computer.random_letter)).to be true
     end
   end
@@ -52,15 +52,18 @@ describe Computer do
     end
 
     #confirms the computer will select a different column if the initial column is full
-    xit "Only plays letter if column is not full" do
+    it "Only plays letter if column is not full" do
       #expect the computer to drop an "O" to column "C" if all other columns are full
+      computer = Computer.new(board)
 
-      # computer.board.add_O(0, 1)
-      # computer.board.add_O(1, 1)
-      # computer.board.add_O(2, 1)
-      # computer.board.add_O(3, 1)
-      # computer.board.add_O(4, 1)
-      # computer.board.add_O(5, 1)
+      computer.board.add_O(0, 1)
+      computer.board.add_O(1, 1)
+      computer.board.add_O(2, 1)
+      computer.board.add_O(3, 1)
+      computer.board.add_O(4, 1)
+      computer.board.add_O(5, 1)
+      computer.random_letter
+      expect(computer.validate).not_to eq("B")
     end
 
     #confirms the computer can play multiple times in each column
