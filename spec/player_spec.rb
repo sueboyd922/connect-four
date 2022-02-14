@@ -51,20 +51,20 @@ describe Player do
     end
 
     it "can't choose to play a full column" do
+      #return to this, see if we can prove valid = true
       player = Player.new(board)
-      binding.pry
       3.times do
         player.drop("A")
       end
       expect(player.board.valid_columns["A"][0]).to eq(6)
-      # player.drop("A")
-      expect{player.validate}.to output("Column full, choose again").to_stdout
-      #
+      @input= "A"
+      expect(player.valid).to be false
     end
 
-    xit "can't choose and invalid_column" do
+    it "can't choose and invalid_column" do
       player=Player.new(board)
-      expect{player.validate}.to output("That's not a valid column, try again").to_stdout
+      @input="P"
+      expect(player.valid).to be false
     end
 
   end

@@ -4,11 +4,12 @@ require 'pry'
 
 # This defines the player class
 class Player
-  attr_reader :board, :quit
+  attr_reader :board, :quit, :valid
   #a player is initialized with a board
   def initialize(board)
     @board = board
     @quit = false
+    @valid = false
   end
 
   def turn
@@ -36,7 +37,7 @@ class Player
   end
 
   # method to determine if the spot is playable
-  def validate
+  def validate(input)
     # does the board's valid columns hash have the same key as the input the player gave?
     if @board.valid_columns.keys.include?(@input)
       # if yes check the count of that column. Is it less than 6? If it's 6 then the column is full and it is invalid
