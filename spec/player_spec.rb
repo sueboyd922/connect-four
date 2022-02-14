@@ -9,8 +9,8 @@ d = Column.new("D", 3)
 e = Column.new("E", 4)
 f = Column.new("F", 5)
 g = Column.new("G", 6)
-valid_columns = [a, b, c, d, e, f, g]
-board = Board.new(valid_columns)
+columns = [a, b, c, d, e, f, g]
+board = Board.new(columns)
 board.create_columns
 
 describe Player do
@@ -56,6 +56,13 @@ describe Player do
         player.drop("A")
       end
       expect(player.board.valid_columns["A"][0]).to eq(6)
+      # player.drop("A")
+      expect{player.validate("A")}.to output("Column full, choose again").to_stdout
+    end
+
+    xit "can't choose and invalid_column" do
+      player=Player.new(board)
+      expect(player.validate("M")).to eq("That's not a valid column, try again")
     end
 
   end

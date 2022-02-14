@@ -19,10 +19,19 @@ describe Game do
       game = Game.new
       expect(game.pieces_played).to eq(0)
     end
+
+
   end
+    # test start method
 
+    # test turn method, game ends with 42 pieces, games ends if there's a winner
 
+    # test winner? method
 
+    # horional check method
 
+    # vertical method
+
+    # diagonal check method
 
 end
