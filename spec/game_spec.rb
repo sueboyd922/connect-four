@@ -38,6 +38,8 @@ describe Game do
       game.start
       want_to_play = "Q"
       #want to prove you can quit and gives a message
+
+      #start new game
     end
 
   end

@@ -1,14 +1,15 @@
 require './lib/column'
-
 require './lib/board'
+require 'pry'
 
 # This defines the player class
 class Player
-  attr_reader :board, :quit
+  attr_reader :board, :quit, :valid
   #a player is initialized with a board
   def initialize(board)
     @board = board
     @quit = false
+    @valid = false
   end
 
   def turn
@@ -39,9 +40,9 @@ class Player
   # method to determine if the spot is playable
   def validate(input)
     # does the board's valid columns hash have the same key as the input the player gave?
-    if @board.valid_columns.keys.include?(input)
+    if @board.valid_columns.keys.include?(@input)
       # if yes check the count of that column. Is it less than 6? If it's 6 then the column is full and it is invalid
-      if @board.valid_columns[input][0] == 6
+      if @board.valid_columns[@input][0] == 6
         puts "Column full, choose again"
         @valid = false #sends user back to get_input
       # if it is less than 6 the input can proceed to the drop method
