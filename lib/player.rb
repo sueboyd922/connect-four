@@ -11,6 +11,18 @@ class Player
     @quit = false
   end
 
+  def turn
+    @valid = false
+    until @valid == true
+        get_input
+        break if @quit == true
+        validate(@input)
+      end
+    unless @quit == true
+      drop(@input)
+    end
+  end
+
   # when it's the players turn they get to type in a letter to play
   def get_input
     puts "Where would you like to play?"
@@ -18,10 +30,8 @@ class Player
     @input = gets.chomp
     @input.upcase!
     if @input == "Q"
-      puts "Thanks for playing!"
       @quit = true
-    else
-      validate(@input) # takes the input to the validate method
+      puts "Thanks for playing!"
     end
   end
 
@@ -32,15 +42,15 @@ class Player
       # if yes check the count of that column. Is it less than 6? If it's 6 then the column is full and it is invalid
       if @board.valid_columns[input][0] == 6
         puts "Column full, choose again"
-        get_input #sends user back to get_input
+        @valid = false #sends user back to get_input
       # if it is less than 6 the input can proceed to the drop method
       else
-        drop(input)
+        @valid = true
       end
     # if the input does not match a column it is invalid
     else
       puts "That's not a valid column, try again"
-      get_input #kicks user back to get_input
+      @valid = false #kicks user back to get_input
     end
   end
 
