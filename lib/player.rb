@@ -1,6 +1,6 @@
 require './lib/column'
-
 require './lib/board'
+require 'pry'
 
 # This defines the player class
 class Player
@@ -21,26 +21,31 @@ class Player
       puts "Thanks for playing!"
       @quit = true
     else
-      validate(@input) # takes the input to the validate method
+      validate # takes the input to the validate method
+      if validate== "That's not a valid column, try again"
+      # binding.pry
+        @input=gets.chomp
+        validate
+      end
     end
   end
 
   # method to determine if the spot is playable
-  def validate(input)
+  def validate
     # does the board's valid columns hash have the same key as the input the player gave?
-    if @board.valid_columns.keys.include?(input)
+    if @board.valid_columns.keys.include?(@input)
       # if yes check the count of that column. Is it less than 6? If it's 6 then the column is full and it is invalid
-      if @board.valid_columns[input][0] == 6
+      if @board.valid_columns[@input][0] == 6
         puts "Column full, choose again"
         get_input #sends user back to get_input
       # if it is less than 6 the input can proceed to the drop method
       else
-        drop(input)
+        drop(@input)
       end
     # if the input does not match a column it is invalid
     else
       puts "That's not a valid column, try again"
-      get_input #kicks user back to get_input
+      # get_input #kicks user back to get_input
     end
   end
 
