@@ -9,8 +9,8 @@ d = Column.new("D", 3)
 e = Column.new("E", 4)
 f = Column.new("F", 5)
 g = Column.new("G", 6)
-valid_columns = [a, b, c, d, e, f, g]
-board = Board.new(valid_columns)
+columns = [a, b, c, d, e, f, g]
+board = Board.new(columns)
 board.create_columns
 
 describe Player do
