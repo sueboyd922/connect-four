@@ -50,7 +50,7 @@ describe Player do
       expect(player.board.lines[2][0]).to eq("X ")
     end
 
-    it "can't choose to play a full column" do
+    xit "can't choose to play a full column" do
       player = Player.new(board)
       3.times do
         player.drop("A")
@@ -60,9 +60,9 @@ describe Player do
       expect{player.validate("A")}.to output("Column full, choose again").to_stdout
     end
 
-    xit "can't choose and invalid_column" do
+    it "can't choose and invalid_column" do
       player=Player.new(board)
-      expect(player.validate("M")).to eq("That's not a valid column, try again")
+      expect{player.validate("M")}.to output("That's not a valid column, try again").to_stdout
     end
 
   end

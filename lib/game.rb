@@ -2,7 +2,7 @@ require './lib/player'
 require './lib/computer'
 
 class Game
-  attr_reader :player, :computer
+  attr_reader :player, :computer, :board, :pieces_played
 
   def initialize
     # creates all the columns
@@ -15,10 +15,10 @@ class Game
     g = Column.new("G", 6)
     #columns into an array that get turned into a hash in the board class
     valid_columns = [a, b, c, d, e, f, g]
-    puts "Welcome to Connect 4!"
-    puts "Press any key to begin"
-    puts "(but only Q if you're a quitter!)"
-    want_to_play = gets.chomp
+    # puts "Welcome to Connect 4!"
+    # puts "Press any key to begin"
+    # puts "(but only Q if you're a quitter!)"
+    # want_to_play = gets.chomp
     #creates a board and then a player and computer that have access to that board
     @board = Board.new(valid_columns)
     @player = Player.new(@board)
@@ -26,19 +26,28 @@ class Game
     #game starts with zero pieces played
     @pieces_played = 0
     #option to quit the game before it starts
-    if want_to_play.upcase == "Q"
-      puts "Ok bye then"
-    else #otherwise on to start!!
-      start
-    end
+    # if want_to_play.upcase == "Q"
+    #   puts "Ok bye then"
+    # else #otherwise on to start!!
+    #   start
+    # end
   end
 
   #this method will kickstart the game!
   def start
-    puts "You will be playing against the computer!"
-    puts "You can go first :)"
-    @player.board.print_board
-    turn #on to the meat of the game!
+    puts "Welcome to Connect 4!"
+    puts "Press any key to begin"
+    puts "(but only Q if you're a quitter!)"
+    want_to_play = gets.chomp
+    if want_to_play.upcase == "Q"
+      puts "Ok bye then"
+    else #otherwise on to start!!
+      start
+      puts "You will be playing against the computer!"
+      puts "You can go first :)"
+      @player.board.print_board
+      turn #on to the meat of the game!
+    end
   end
 
   def turn
@@ -122,3 +131,4 @@ class Game
 end
 
 game = Game.new
+# game.start
