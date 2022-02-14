@@ -33,6 +33,7 @@ class Player
       @quit = true
       puts "Thanks for playing!"
     end
+
   end
 
   # method to determine if the spot is playable
