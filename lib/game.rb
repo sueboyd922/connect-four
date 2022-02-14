@@ -42,7 +42,6 @@ class Game
     if want_to_play.upcase == "Q"
       puts "Ok bye then"
     else #otherwise on to start!!
-      start
       puts "You will be playing against the computer!"
       puts "You can go first :)"
       @player.board.print_board
@@ -53,7 +52,7 @@ class Game
   def turn
     # game will continue until 42 pieces have been played if there is no winner and the game will be a draw
     until @pieces_played == 42
-      @player.get_input # this starts the chain of getting info, checking that it is a valid choice, adding it to the board and then printing the new board
+      @player.turn # this starts the chain of getting info, checking that it is a valid choice, adding it to the board and then printing the new board
       @pieces_played += 1 #one more piece played!
       break if @player.quit == true #if player ever types Q game is quit
       break if winner?(@player) == true #if the player wins, game over
@@ -79,7 +78,7 @@ class Game
     else
       letters = "O O O O" #if not they looks for Os
     end
-
+    # require 'pry'; binding.pry
     if check_for_diagonal(letters) == false
       return true
     elsif check_for_horizontal(letters) == false
@@ -131,4 +130,4 @@ class Game
 end
 
 game = Game.new
-# game.start
+game.start
