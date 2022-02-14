@@ -3,7 +3,7 @@ require './lib/board'
 
 class Player
   attr_reader :board, :quit
-  #a player is initialized with a board (I think should be the same board as the computer class, we will figure that out)
+  #a player is initialized with a board
   def initialize(board)
     @board = board
     @quit = false
@@ -56,54 +56,6 @@ class Player
       #print out the board with new piece
       @board.print_board
       #goes back to user_input for another guess (this will change when we have both user and computer playing)
-  end
-
-  def check_for_horizontal
-    connect = @board.lines.select do |column|
-            column.join.include?("X X X X")
-          end
-    connect.empty?
-  end
-
-  def check_for_vertical
-    column_check = @board.lines.transpose
-    connect = column_check.select do |column|
-            column.join.include?("X X X X")
-          end
-    connect.empty?
-  end
-
-  def diagonal
-    diagonal_lines = [
-      [@board.lines[2][0], @board.lines[3][1], @board.lines[4][2], @board.lines[5][3]],
-      [@board.lines[1][0], @board.lines[2][1], @board.lines[3][2], @board.lines[4][3], @board.lines[5][4]],
-      [@board.lines[0][0], @board.lines[1][1], @board.lines[2][2], @board.lines[3][3], @board.lines[4][4], @board.lines[5][5]],
-      [@board.lines[0][1], @board.lines[1][2], @board.lines[2][3], @board.lines[3][4], @board.lines[4][5], @board.lines[5][6]],
-      [@board.lines[0][2], @board.lines[1][3], @board.lines[2][4], @board.lines[3][5], @board.lines[4][6]],
-      [@board.lines[0][3], @board.lines[1][4], @board.lines[2][5], @board.lines[3][6]],
-      [@board.lines[3][0], @board.lines[2][1], @board.lines[1][2], @board.lines[0][3]],
-      [@board.lines[4][0], @board.lines[3][1], @board.lines[2][2], @board.lines[1][3], @board.lines[0][4]],
-      [@board.lines[5][0], @board.lines[4][1], @board.lines[3][2], @board.lines[2][3], @board.lines[1][4], @board.lines[0][5]],
-      [@board.lines[5][1], @board.lines[4][2], @board.lines[3][3], @board.lines[2][4], @board.lines[1][5], @board.lines[0][6]],
-      [@board.lines[5][2], @board.lines[4][3], @board.lines[3][4], @board.lines[2][5], @board.lines[1][6]],
-      [@board.lines[5][3], @board.lines[4][4], @board.lines[3][5], @board.lines[2][6]]
-    ]
-    # diagonal = @board.diagonal_lines
-    # require 'pry'; binding.pry
-    connect = diagonal_lines.select do |column|
-            column.join.include?("X X X X")
-          end
-    connect.empty?
-  end
-
-  def winner?
-    if diagonal == false
-      return true
-    elsif check_for_horizontal == false
-      return true
-    elsif check_for_vertical == false
-      return true
-    end
   end
 
 end
