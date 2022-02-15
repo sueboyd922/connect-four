@@ -101,19 +101,20 @@ class Game
 
   #this dooozy: array of diagonal rows with at least 4 spaces. and then same method to sweep through these lines for 4 in a row
   def check_for_diagonal(letters)
+    @bl = @board.lines
     diagonal_lines = [
-      [@board.lines[2][0], @board.lines[3][1], @board.lines[4][2], @board.lines[5][3]],
-      [@board.lines[1][0], @board.lines[2][1], @board.lines[3][2], @board.lines[4][3], @board.lines[5][4]],
-      [@board.lines[0][0], @board.lines[1][1], @board.lines[2][2], @board.lines[3][3], @board.lines[4][4], @board.lines[5][5]],
-      [@board.lines[0][1], @board.lines[1][2], @board.lines[2][3], @board.lines[3][4], @board.lines[4][5], @board.lines[5][6]],
-      [@board.lines[0][2], @board.lines[1][3], @board.lines[2][4], @board.lines[3][5], @board.lines[4][6]],
-      [@board.lines[0][3], @board.lines[1][4], @board.lines[2][5], @board.lines[3][6]],
-      [@board.lines[3][0], @board.lines[2][1], @board.lines[1][2], @board.lines[0][3]],
-      [@board.lines[4][0], @board.lines[3][1], @board.lines[2][2], @board.lines[1][3], @board.lines[0][4]],
-      [@board.lines[5][0], @board.lines[4][1], @board.lines[3][2], @board.lines[2][3], @board.lines[1][4], @board.lines[0][5]],
-      [@board.lines[5][1], @board.lines[4][2], @board.lines[3][3], @board.lines[2][4], @board.lines[1][5], @board.lines[0][6]],
-      [@board.lines[5][2], @board.lines[4][3], @board.lines[3][4], @board.lines[2][5], @board.lines[1][6]],
-      [@board.lines[5][3], @board.lines[4][4], @board.lines[3][5], @board.lines[2][6]]
+      [@bl[2][0], @bl[3][1], @bl[4][2], @bl[5][3]],
+      [@bl[1][0], @bl[2][1], @bl[3][2], @bl[4][3], @bl[5][4]],
+      [@bl[0][0], @bl[1][1], @bl[2][2], @bl[3][3], @bl[4][4], @bl[5][5]],
+      [@bl[0][1], @bl[1][2], @bl[2][3], @bl[3][4], @bl[4][5], @bl[5][6]],
+      [@bl[0][2], @bl[1][3], @bl[2][4], @bl[3][5], @bl[4][6]],
+      [@bl[0][3], @bl[1][4], @bl[2][5], @bl[3][6]],
+      [@bl[3][0], @bl[2][1], @bl[1][2], @bl[0][3]],
+      [@bl[4][0], @bl[3][1], @bl[2][2], @bl[1][3], @bl[0][4]],
+      [@bl[5][0], @bl[4][1], @bl[3][2], @bl[2][3], @bl[1][4], @bl[0][5]],
+      [@bl[5][1], @bl[4][2], @bl[3][3], @bl[2][4], @bl[1][5], @bl[0][6]],
+      [@bl[5][2], @bl[4][3], @bl[3][4], @bl[2][5], @bl[1][6]],
+      [@bl[5][3], @bl[4][4], @bl[3][5], @bl[2][6]]
       ]
 
       connect = diagonal_lines.select do |column|
@@ -122,6 +123,3 @@ class Game
       connect.empty?
     end
 end
-
-# game = Game.new
-# game.start

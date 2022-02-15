@@ -11,7 +11,6 @@ f = Column.new("F", 5)
 g = Column.new("G", 6)
 columns = [a, b, c, d, e, f, g]
 board = Board.new(columns)
-board.create_columns
 
 describe Player do
   describe 'initialize' do
@@ -42,13 +41,17 @@ describe Player do
 
     it "can't choose to play a full column" do
       #return to this, see if we can prove valid = true
+      board = Board.new(columns)
       player = Player.new(board)
-      3.times do
+      @input= "A"
+      # require 'pry'; binding.pry
+      expect(player.validate(@input)).to be true
+      6.times do
         player.drop("A")
       end
       expect(player.board.valid_columns["A"][0]).to eq(6)
       @input= "A"
-      expect(player.valid).to be false
+      expect(player.validate(@input)).to be false
     end
 
     it "can't choose and invalid_column" do

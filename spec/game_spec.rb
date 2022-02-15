@@ -22,15 +22,12 @@ describe Game do
   end
 
   describe '#start' do
-
-
-    xit 'allows you to quit the game' do
+    xit 'allows you to quit the game at the start' do
       game = Game.new
-      game.start
-      want_to_play = "Q"
+      expect{game.start}.to output("Welcome to Connect 4!\nPress any key to begin").to_stdout
 
+      # expect{want_to_play = "Q"}.to output("Ok bye then").to_stdout
     end
-
   end
 
   describe "winning situations" do
@@ -104,11 +101,11 @@ describe Game do
         game.player.drop("C")
         game.player.drop("G")
       end
+      # require 'pry'; binding.pry
       expect(game.board.board_full?).to be true
+      expect{game.turn}.to output("The board is full! It's a draw\n").to_stdout
     end
   end
 
-
-    # test turn method, game ends with 42 pieces, games ends if there's a winner
 
 end
