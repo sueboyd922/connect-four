@@ -67,7 +67,7 @@ class Player
       # store the valid_columns input of index as column (this stays the same)
       column = @board.valid_columns[input][1]
       # use the board method to add the new piece
-      if letter = "X "
+      if letter == "X "
         @board.add_X(row, column)
         # increase the count in the column used by 1 so that next time it drops above it
       else

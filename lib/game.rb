@@ -26,7 +26,7 @@ class Game
   end
 
   #this method will kickstart the game!
-  def start
+  def intro
     puts "Welcome to Connect 4!"
     puts "Press any key to begin"
     puts "(but only Q if you're a quitter!)"
@@ -34,45 +34,103 @@ class Game
     if want_to_play.upcase == "Q"
       puts "Ok bye then"
     else
+      puts "Would you like to play against the computer or a friend?"
+      @tries = 0
+      which_type
+    end
+  end
+
+  def which_type
+    puts "Type '1' for friend and '2' for computer!"
+    @game_type = gets.chomp
+    @tries += 1
+    start
+  end
+
+  def start
+    if @game_type == "1"
+      @player_one = Player.new(@board)
+      @player_two = Player.new(@board)
+      puts "Player One will go first as X, player Two will be O"
+      @player_one.board.print_board
+      @game_type = :two_player
+      turn
+    elsif @game_type == "2"
       puts "You will be playing against the computer!"
       puts "You can go first :)"
+      @player = Player.new(@board)
+      @computer = Computer.new(@board)
       @player.board.print_board
-      turn #on to the meat of the game!
+      @game_type = :one_player
+      turn
+    else
+      if @tries == 3
+        "You just don't get it..."
+      else
+        puts "Invalid entry"
+        which_type
+      end
     end
   end
 
   def turn
-    # game will continue until 42 pieces have been played if there is no winner and the game will be a draw
-    until @player.board.board_full?
-      @player.turn # this starts the chain of getting info, checking that it is a valid choice, adding it to the board and then printing the new board
-      @pieces_played += 1 #one more piece played!
-      break if @player.quit == true #if player ever types Q game is quit
-      break if winner?(@player) == true #if the player wins, game over
-      @computer.random_letter # starts the chain of getting a random letter from the computer and if column not full, adds to the board and prints updated board
-      @pieces_played += 1
-      break if winner?(@computer) == true #game over if computer wins
-    end
+    case @game_type
+    when :one_player
+      until @player.board.board_full?
+        @player.get_input
+        @pieces_played += 1
+        break if @player.quit == true
+        break if winner?(@player) == true
+        @computer.random_letter
+        @pieces_played += 1
+        break if winner?(@computer) == true
+      end
+      if @player.board.board_full?
+        puts "The board is full! It's a draw"
+      elsif winner?(@player)
+        puts "You beat a dumb computer...congrats"
+      elsif winner?(@computer)
+        puts "The computer beat you...sad"
+      end
 
-    #when game ends whichever option is true prints out!
-    if @player.board.board_full?
-      puts "The board is full! It's a draw"
-    elsif winner?(@player)
-      @winner = "player"
-      puts "You beat a dumb computer...congrats"
-    elsif winner?(@computer)
-      @winner = "computer"
-      puts "The computer beat you...sad"
+    when :two_player
+      until @player.board.board_full?
+        @player_one.get_input
+        @pieces_played += 1
+        break if @player_one.quit == true
+        break if winner?(@player_one)
+        @player_two.get_input("O ")
+        @pieces_played += 1
+        break if @player_two.quit == true
+        break if winner?(@player_two)
+      end
+      if @player.board.board_full?
+        puts "No one wins! It's a draw!"
+      elsif winner?(@player_one)
+        puts "Player 1 wins!"
+      elsif winner?(@player_two)
+        puts "Player 2 wins!"
+      end
     end
   end
 
   #this method determines if there is a winner!!
   def winner?(whose_turn)
-    if whose_turn.instance_of?(Player) #if player class they look for Xs
-      letters = "X X X X"
-    else
-      letters = "O O O O" #if not they looks for Os
+    case @game_type
+    when :one_player
+      if whose_turn.instance_of?(Player) #if player class they look for Xs
+        letters = "X X X X"
+      else
+        letters = "O O O O" #if not they looks for Os
+      end
+    when :two_player
+      if whose_turn == @player_one
+        letters = "X X X X"
+      else
+        letters = "O O O O"
+      end
     end
-    # require 'pry'; binding.pry
+
     if check_for_diagonal(letters) == false
       return true
     elsif check_for_horizontal(letters) == false
