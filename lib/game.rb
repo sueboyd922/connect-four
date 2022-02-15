@@ -2,7 +2,7 @@ require './lib/player'
 require './lib/computer'
 
 class Game
-  attr_reader :player, :computer, :board, :pieces_played
+  attr_reader :player, :computer, :board
   attr_accessor :winner
 
   def initialize
@@ -20,9 +20,6 @@ class Game
     @board = Board.new(valid_columns)
     @player = Player.new(@board)
     @computer = Computer.new(@board)
-
-    #game starts with zero pieces played
-    @pieces_played = 0
   end
 
   #this method will kickstart the game!
@@ -43,6 +40,7 @@ class Game
   def which_type
     puts "Type '1' for friend and '2' for computer!"
     @game_type = gets.chomp
+    # require 'pry'; binding.pry
     @tries += 1
     start
   end
@@ -76,16 +74,14 @@ class Game
   def turn
     case @game_type
     when :one_player
-      until @player.board.board_full?
+      until @board.board_full?
         @player.get_input
-        @pieces_played += 1
         break if @player.quit == true
         break if winner?(@player) == true
         @computer.random_letter
-        @pieces_played += 1
         break if winner?(@computer) == true
       end
-      if @player.board.board_full?
+      if @board.board_full?
         puts "The board is full! It's a draw"
       elsif winner?(@player)
         puts "You beat a dumb computer...congrats"
@@ -94,17 +90,15 @@ class Game
       end
 
     when :two_player
-      until @player.board.board_full?
+      until @board.board_full?
         @player_one.get_input
-        @pieces_played += 1
         break if @player_one.quit == true
         break if winner?(@player_one)
         @player_two.get_input("O ")
-        @pieces_played += 1
         break if @player_two.quit == true
         break if winner?(@player_two)
       end
-      if @player.board.board_full?
+      if @board.board_full?
         puts "No one wins! It's a draw!"
       elsif winner?(@player_one)
         puts "Player 1 wins!"
@@ -150,6 +144,7 @@ class Game
 
   #swaps columns and rows and sweeps through each column for 4 in a row
   def check_for_vertical(letters)
+    require 'pry'; binding.pry
     column_check = @board.lines.transpose
     connect = column_check.select do |column|
             column.join.include?(letters)
@@ -160,6 +155,7 @@ class Game
   #this dooozy: array of diagonal rows with at least 4 spaces. and then same method to sweep through these lines for 4 in a row
   def check_for_diagonal(letters)
     @bl = @board.lines
+    letters
     diagonal_lines = [
       [@bl[2][0], @bl[3][1], @bl[4][2], @bl[5][3]],
       [@bl[1][0], @bl[2][1], @bl[3][2], @bl[4][3], @bl[5][4]],
@@ -176,6 +172,7 @@ class Game
       ]
 
       connect = diagonal_lines.select do |column|
+        # require 'pry'; binding.pry
           column.join.include?(letters)
           end
       connect.empty?

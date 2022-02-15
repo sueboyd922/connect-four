@@ -28,14 +28,15 @@ describe Player do
   describe '#drop' do
     it 'can add an X to the board' do
       player = Player.new(board)
-      player.drop("A")
+      player.drop("A", "X ")
       expect(player.board.lines[0][0]).to eq("X ")
     end
 
     it 'can add a piece on top of another' do
       player = Player.new(board)
-      player.drop("A")
-      player.drop("A")
+      # require 'pry'; binding.prypl
+      player.drop("A", "X ")
+      player.drop("A", "X ")
       expect(player.board.lines[2][0]).to eq("X ")
     end
 
@@ -44,14 +45,15 @@ describe Player do
       board = Board.new(columns)
       player = Player.new(board)
       @input= "A"
-      # require 'pry'; binding.pry
-      expect(player.validate(@input)).to be true
-      6.times do
-        player.drop("A")
+      expect(player.validate(@input, "X ")).to be true
+      require 'pry'; binding.pry
+      5.times do
+        player.drop("A", "X ")
+        # require 'pry'; binding.pry
       end
       expect(player.board.valid_columns["A"][0]).to eq(6)
       @input= "A"
-      expect(player.validate(@input)).to be false
+      expect(player.validate(@input, "X ")).to be false
     end
 
     it "can't choose and invalid_column" do

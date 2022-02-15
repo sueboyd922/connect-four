@@ -60,7 +60,7 @@ class Player
   end
 
   # method adds players piece to board
-  def drop(input)
+  def drop(input, letter = "X ")
     # require 'pry'; binding.pry
       # store the valid_columns input of count as row (this changes)
       row = @board.valid_columns[input][0]

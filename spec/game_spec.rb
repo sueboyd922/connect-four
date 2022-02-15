@@ -1,6 +1,16 @@
 require './lib/game.rb'
 require 'rspec'
 
+a = Column.new("A", 0)
+b = Column.new("B", 1)
+c = Column.new("C", 2)
+d = Column.new("D", 3)
+e = Column.new("E", 4)
+f = Column.new("F", 5)
+g = Column.new("G", 6)
+valid_columns = [a, b, c, d, e, f, g]
+@board = Board.new(valid_columns)
+
 describe Game do
   describe '#initialize' do
     it 'exists' do
@@ -15,9 +25,9 @@ describe Game do
       expect(game.computer).to be_an_instance_of(Computer)
     end
 
-    it 'starts with zero pieces played' do
+    it 'starts with zero pieces played, board empty' do
       game = Game.new
-      expect(game.pieces_played).to eq(0)
+      expect(game.board.board_full?).to be false
     end
   end
 
@@ -33,13 +43,16 @@ describe Game do
   describe "winning situations" do
     it 'can have a vertical winner' do
       game = Game.new
-      game.board.add_X(0, 0)
-      game.board.add_X(1, 0)
-      game.board.add_X(2, 0)
-      game.board.add_X(3, 0)
+      @game_type = :one_player
+      computer = Computer.new(@board)
+      game.board.add_O(0, 0)
+      game.board.add_O(1, 0)
+      game.board.add_O(2, 0)
+      game.board.add_O(3, 0)
+      # require 'pry'; binding.pry
       # when check_for_vertical is false it means that the array collecting winning combinations is not empty, aka there is a winner!
-      expect(game.check_for_vertical("X X X X")).to be false
-      expect(game.winner?(game.player)).to be true
+      expect(game.winner?(computer)).to be true
+      expect(game.check_for_vertical("O O O O")).to be false
 
     end
 
@@ -80,10 +93,10 @@ describe Game do
       game = Game.new
       expect(game.board.board_full?).to be false
       3.times do
-        game.player.drop("A")
-        game.player.drop("B")
-        game.player.drop("D")
-        game.player.drop("F")
+        game.player.drop("A", "X ")
+        game.player.drop("B", "X ")
+        game.player.drop("D", "X ")
+        game.player.drop("F", "X ")
       end
       expect(game.board.board_full?).to be false
       3.times do
@@ -97,12 +110,13 @@ describe Game do
       end
       expect(game.board.board_full?).to be false
       3.times do
-        game.player.drop("E")
-        game.player.drop("C")
-        game.player.drop("G")
+        game.player.drop("E", "X ")
+        game.player.drop("C", "X ")
+        game.player.drop("G", "X ")
       end
       # require 'pry'; binding.pry
       expect(game.board.board_full?).to be true
+      # @game_type = :one_player
       expect{game.turn}.to output("The board is full! It's a draw\n").to_stdout
     end
   end
