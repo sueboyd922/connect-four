@@ -34,14 +34,12 @@ describe Player do
 
     it 'can add a piece on top of another' do
       player = Player.new(board)
-      # require 'pry'; binding.prypl
       player.drop("A")
       player.drop("A")
       expect(player.board.lines[2][0]).to eq("X ")
     end
 
     it "can't choose to play a full column" do
-      #return to this, see if we can prove valid = true
       board = Board.new(columns)
       player = Player.new(board)
       @input= "A"
@@ -59,7 +57,5 @@ describe Player do
       @input="P"
       expect(player.valid).to be false
     end
-
   end
-
 end

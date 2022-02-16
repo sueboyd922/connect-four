@@ -36,7 +36,6 @@ describe Computer do
     #confirms the computer can randomly select a column to play in
     it "generates a random letter to play" do
       computer = Computer.new(board)
-
       expect(computer.board.valid_columns.keys.include?(computer.random_letter)).to be true
     end
   end
@@ -46,7 +45,6 @@ describe Computer do
     #confirms the computer can play an "O" after a valid column is selected
     it 'can add an O to the board' do
       computer = Computer.new(board)
-      # binding.pry
       computer.drop("A")
       expect(computer.board.lines[0][0]).to eq("O ")
     end
@@ -56,7 +54,6 @@ describe Computer do
       computer = Computer.new(board)
       6.times do
         computer.drop("B")
-        # require 'pry'; binding.pry
       end
       expect(computer.validate(computer.random_letter)).not_to eq("B")
     end
@@ -67,7 +64,6 @@ describe Computer do
       computer.drop("C")
       computer.drop("C")
       expect(board.lines[1][2]).to eq("O ")
-
     end
   end
 end

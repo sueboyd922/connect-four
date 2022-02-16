@@ -1,17 +1,6 @@
 require './lib/game.rb'
 require 'rspec'
 
-# a = Column.new("A", 0)
-# b = Column.new("B", 1)
-# c = Column.new("C", 2)
-# d = Column.new("D", 3)
-# e = Column.new("E", 4)
-# f = Column.new("F", 5)
-# g = Column.new("G", 6)
-# #columns into an array that get turned into a hash in the board class
-# valid_columns = [a, b, c, d, e, f, g]
-# @board = Board.new(valid_columns)
-
 describe Game do
   describe '#initialize' do
     it 'exists' do
@@ -29,15 +18,6 @@ describe Game do
     it 'starts with zero pieces played, board empty' do
       game = Game.new
       expect(game.board.board_full?).to be false
-    end
-  end
-
-  describe '#start' do
-    xit 'allows you to quit the game at the start' do
-      game = Game.new
-      expect{game.start}.to output("Welcome to Connect 4!\nPress any key to begin").to_stdout
-
-      # expect{want_to_play = "Q"}.to output("Ok bye then").to_stdout
     end
   end
 
@@ -65,7 +45,6 @@ describe Game do
       game.board.add_O(2, 5)
       game.game_type = "one player"
       letters = "O O O O"
-      # require 'pry'; binding.pry
       # when check_for_horizontal is false it means that the array collecting winning combinations is not empty, aka there is a winner!
       expect(game.check_for_horizontal(letters)).to be false
       expect(game.winner?(computer)).to be true
@@ -80,7 +59,6 @@ describe Game do
       game.board.add_X(2, 2)
       game.game_type = "one player"
       letters = "X X X X"
-      # require 'pry'; binding.pry
       # when check_for_diagonal is false it means that the array collecting winning combinations is not empty, aka there is a winner!
       expect(game.check_for_diagonal(letters)).to be false
       expect(game.winner?(player)).to be true
@@ -125,9 +103,7 @@ describe Game do
         game.player.drop("C", "X ")
         game.player.drop("G", "X ")
       end
-      # require 'pry'; binding.pry
       expect(game.board.board_full?).to be true
-      # @game_type = :one_player
       game.game_type = "one player"
       expect{game.turn}.to output("The board is full! It's a draw\n").to_stdout
     end
