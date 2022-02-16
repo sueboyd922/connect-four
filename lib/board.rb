@@ -31,6 +31,7 @@ class Board
     #this method prints the board
     #the .reverse makes it print upside down so that the X and O get dropped at the bottom of the board
     def print_board
+      puts ""
       puts "A B C D E F G"
       board = @lines.reverse.map do |line|
               line.map do |space|
@@ -38,6 +39,8 @@ class Board
               end
               puts ""
             end
+            puts "-" * 13 #added this to separate the boards in more space
+            puts ""
     end
 
     #this method will be used to add the players pieces
@@ -52,6 +55,7 @@ class Board
       @lines[row][column] = "O "
     end
 
+    #this method checks the whole board for '. ' spaces, if there aren't any the board is full and the game must end in a draw!
     def board_full?
       empty_spaces = @lines.select do |row|
             row.join.include?(". ")

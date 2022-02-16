@@ -54,14 +54,11 @@ describe Computer do
     #confirms the computer will select a different column if the initial column is full
     it "Only plays letter if column is not full" do
       computer = Computer.new(board)
-      computer.board.add_O(0, 1)
-      computer.board.add_O(1, 1)
-      computer.board.add_O(2, 1)
-      computer.board.add_O(3, 1)
-      computer.board.add_O(4, 1)
-      computer.board.add_O(5, 1)
-      computer.random_letter
-      expect(computer.validate).not_to eq("B")
+      6.times do
+        computer.drop("B")
+        # require 'pry'; binding.pry
+      end
+      expect(computer.validate(computer.random_letter)).not_to eq("B")
     end
 
     #confirms the computer can play multiple times in each column

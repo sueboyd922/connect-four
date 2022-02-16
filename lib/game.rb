@@ -3,7 +3,7 @@ require './lib/computer'
 
 class Game
   attr_reader :player, :computer, :board
-  attr_accessor :winner
+  attr_accessor :game_type #we know we should not use attr_accessor but when we added the two person option for the game we had to add it in order to access the game_type and manipulate it for the tests
 
   def initialize
     # creates all the columns
@@ -20,6 +20,7 @@ class Game
     @board = Board.new(valid_columns)
     @player = Player.new(@board)
     @computer = Computer.new(@board)
+    @game_type = nil #game_type starts as nil, to be determined in which_type
   end
 
   #this method will kickstart the game!
@@ -27,60 +28,71 @@ class Game
     puts "Welcome to Connect 4!"
     puts "Press any key to begin"
     puts "(but only Q if you're a quitter!)"
-    want_to_play = gets.chomp
+    want_to_play = gets.chomp #any key to go, except Q will quit
     if want_to_play.upcase == "Q"
       puts "Ok bye then"
     else
+      puts ""
       puts "Would you like to play against the computer or a friend?"
-      @tries = 0
+      @tries = 0 #this is here to give players 3 tries to get this answer right before quitting
       which_type
     end
   end
 
   def which_type
     puts "Type '1' for friend and '2' for computer!"
-    @game_type = gets.chomp
-    # require 'pry'; binding.pry
+    @game_choice = gets.chomp #stores which choice user has made
     @tries += 1
     start
   end
 
   def start
-    if @game_type == "1"
-      @player_one = Player.new(@board)
-      @player_two = Player.new(@board)
-      puts "Player One will go first as X, player Two will be O"
+    #if they want to play against a friend!
+    if @game_choice == "1"
+      print "Enter first player's name: "
+      p1_name = gets.chomp
+      print "Enter second player's name: "
+      p2_name = gets.chomp
+      @player_one = Player.new(@board, p1_name)#create two players
+      @player_two = Player.new(@board, p2_name)
+      puts "#{@player_one.name} will go first as X, #{@player_two.name} will be O"
       @player_one.board.print_board
-      @game_type = :two_player
-      turn
-    elsif @game_type == "2"
+      @game_type = "two player" #stores game type
+      turn #begins the game!
+    #if they want to play against the computer (comp and player already initialized when game was created)
+    elsif @game_choice == "2"
+      puts ""
       puts "You will be playing against the computer!"
       puts "You can go first :)"
-      @player = Player.new(@board)
-      @computer = Computer.new(@board)
       @player.board.print_board
-      @game_type = :one_player
+      @game_type = "one player" #stores game type
       turn
     else
-      if @tries == 3
-        "You just don't get it..."
+      if @tries == 3 #if they keep hitting the wrong keys, forced to quit
+        puts "This really isn't that hard..."
       else
         puts "Invalid entry"
-        which_type
+        which_type #kicks them back to make a decision again
       end
     end
   end
 
   def turn
+    #all depends on which type of game! one or two player
     case @game_type
-    when :one_player
-      until @board.board_full?
-        @player.get_input
-        break if @player.quit == true
-        break if winner?(@player) == true
-        @computer.random_letter
-        break if winner?(@computer) == true
+    #with one player the computer is random and player chooses column
+    when "one player"
+      until @board.board_full? #game stops if board is full w/o a winner
+        @player.turn
+        break if @player.quit == true # stops game if player wants to quit
+        break if winner?(@player) == true # stops game if the player won!
+        @computer.random_letter #computer random choice!
+        break if winner?(@computer) == true #stops if computer wins the game
       end
+      if @player.quit == true # inspirational message for someone who can't hack it against a less than intelligent computer opponent
+        puts "You miss 100% of the shots you don't take...quitter"
+      end
+      #when game is over one message will print out
       if @board.board_full?
         puts "The board is full! It's a draw"
       elsif winner?(@player)
@@ -89,42 +101,51 @@ class Game
         puts "The computer beat you...sad"
       end
 
-    when :two_player
+    # in the case of two live human players
+    when "two player"
       until @board.board_full?
-        @player_one.get_input
-        break if @player_one.quit == true
+        puts "#{@player_one.name}'s turn!!"
+        @player_one.turn # player one and if single player there is no letter passed on, it will default to X
+        break if @player_one.quit == true #option to quit
         break if winner?(@player_one)
-        @player_two.get_input("O ")
+        puts "#{@player_two.name}'s turn!!"
+        @player_two.turn("O ")# the second player will be O so it gets passed along to the methods inside the players turn
         break if @player_two.quit == true
         break if winner?(@player_two)
       end
+
+      # message that will print out when game is over
       if @board.board_full?
         puts "No one wins! It's a draw!"
       elsif winner?(@player_one)
-        puts "Player 1 wins!"
+        puts "#{@player_one.name} rules! #{@player_two.name} drools!"
+        puts "#{@player_one.name} won in #{@player_one.moves} moves!"
       elsif winner?(@player_two)
-        puts "Player 2 wins!"
+        puts "#{@player_two.name} rules! #{@player_two.name} drools!"
+        puts "#{@player_two.name} won in #{@player_two.moves} moves!"
       end
     end
   end
 
   #this method determines if there is a winner!!
   def winner?(whose_turn)
+    #searches for winner based on whose turn it is!
     case @game_type
-    when :one_player
+    when "one player"
       if whose_turn.instance_of?(Player) #if player class they look for Xs
         letters = "X X X X"
       else
-        letters = "O O O O" #if not they looks for Os
+        letters = "O O O O" #if computer not they looks for Os
       end
-    when :two_player
+    when "two player"
       if whose_turn == @player_one
         letters = "X X X X"
       else
-        letters = "O O O O"
+        letters = "O O O O" #player_two will always have O's
       end
     end
 
+  #this series of checks searches the board for any connects
     if check_for_diagonal(letters) == false
       return true
     elsif check_for_horizontal(letters) == false
@@ -139,12 +160,11 @@ class Game
     connect = @board.lines.select do |column|
           column.join.include?(letters)
         end
-    connect.empty?
+    connect.empty? #if connect array is empty then there was no connects found, will return true. if connect array is *not* empty there is a winning combo and will return false. (counter intuitive lol)
   end
 
   #swaps columns and rows and sweeps through each column for 4 in a row
   def check_for_vertical(letters)
-    require 'pry'; binding.pry
     column_check = @board.lines.transpose
     connect = column_check.select do |column|
             column.join.include?(letters)
@@ -154,8 +174,7 @@ class Game
 
   #this dooozy: array of diagonal rows with at least 4 spaces. and then same method to sweep through these lines for 4 in a row
   def check_for_diagonal(letters)
-    @bl = @board.lines
-    letters
+    @bl = @board.lines #quick save this to a shorter variable for hard coding the diagonal options
     diagonal_lines = [
       [@bl[2][0], @bl[3][1], @bl[4][2], @bl[5][3]],
       [@bl[1][0], @bl[2][1], @bl[3][2], @bl[4][3], @bl[5][4]],
@@ -172,7 +191,6 @@ class Game
       ]
 
       connect = diagonal_lines.select do |column|
-        # require 'pry'; binding.pry
           column.join.include?(letters)
           end
       connect.empty?
